@@ -1,0 +1,60 @@
+#Holly Tamez (hyt99)
+
+from string import punctuation   
+
+def strip_punctuation(s):
+    return ''.join(c for c in s if c not in punctuation)
+
+def print_word_count(dictionary, word):
+    print("Count of \"" + word + "\" is:", dictionary[word])
+
+def count_words(file_name):
+    word_count = {}
+    file = open(file_name)
+    data = file.read()
+    words = data.lower()
+    words = words.split()
+    
+    
+    stop_words = {"a","am","an", "and","are", "as", "at",
+                  "be","but", "by", "for", "i", "if", "in", "into",
+                  "is", "it", "its", "my", "nor", "not", "of", "on",
+                  "or", "so", "than", "that", "the", "then", "this",
+                  "to", "too", "will", "with"}
+
+
+    for word in words:
+        a = strip_punctuation(word)
+        
+        if a not in stop_words:
+            if a not in word_count:
+                word_count[a] = 1
+            else:
+                word_count[a] += 1
+        
+
+    file.close()
+    return word_count
+
+
+def find_max(dictionary):
+    
+    maximum = max(dictionary.values())
+    for key in dictionary:
+        if dictionary[key] == maximum:
+            list1 = (key, dictionary[key])
+            tuple1 = tuple(list1)
+
+    return tuple1
+
+def main():
+
+    word_count = count_words("pride.txt")
+    most_freq = find_max(word_count)
+    print_word_count(word_count, most_freq[0])
+    print_word_count(word_count, 'pride')
+    print_word_count(word_count, 'prejudice')
+
+if __name__ == '__main__':
+          
+    main()
